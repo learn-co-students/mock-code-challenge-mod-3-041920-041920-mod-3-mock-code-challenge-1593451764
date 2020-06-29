@@ -1,4 +1,3 @@
-let allBakes = []
 const baseUrl = 'http://localhost:3000/bakes'
 
 fetchAllBakes(baseUrl)
@@ -7,22 +6,22 @@ judgeBakeEvent()
 
 
 /** Fetch requests */
-function fetchAllBakes(url){
-  fetch(url)
+function fetchAllBakes(baseUrl){
+  fetch(baseUrl)
   .then(response => response.json())
   .then(bakes => {
-    allBakes = [...bakes]
-    console.log(allBakes)
-    renderBakes(allBakes)
-    renderDetail()
+    console.log(bakes)
+    renderBakes(bakes)
+    renderDetail(bakes[0])
   })
 }
 
-function updateAllBakes(newBake){
-  debugger
-  allBakes[newBake.id] = newBake
-  console.log('updated')
-  console.log(allBakes)
+function fetchOneBake(baseUrl, bake){
+  fetch(baseUrl+`/${bake.id}`)
+  .then(response => response.json())
+  .then(bakeObj => {
+    renderDetail(bakeObj)
+  })
 }
 
 function createBakeFetch(newBake){
@@ -44,6 +43,7 @@ function createBakeFetch(newBake){
     .then(bakeObj => {
       renderOneBake(bakeObj)
       closeModal()
+      renderDetail(bakeObj)
     })
 }
 
@@ -58,19 +58,10 @@ function patchScoreFetch(score, bakeId){
       score: parseInt(score)
     })
   }
-  fetch(`http://localhost:3000/bakes/${bakeId}/ratings`, scoreObj)
+  fetch(baseUrl+`/${bakeId}/ratings`, scoreObj)
     .then(res => res.json())
     .then(bakeObj => {
-      
-      /** how do I keep score present???? */
-      console.log("after update score")
       console.log(bakeObj)
-      
-      bake = bakeObj
-      updateAllBakes(bakeObj)
-
-      console.log("initial bake")
-      console.log(bake)
     })
 }
 
@@ -84,8 +75,8 @@ function winnerFetch(){
 
 /* initial render */
 function renderBakes(bakes){
-  console.log(bakes)
   bakes.forEach(renderOneBake);
+  
 }
 
 function renderOneBake(bake){  
@@ -98,11 +89,12 @@ function renderOneBake(bake){
 
   bakeLi.addEventListener('click', function(e){
     // console.log(e.target.dataset.id)
-    renderDetail(bake)
+    fetchOneBake(baseUrl, bake)
+    // renderDetail(bake)
   })
 }
 
-function renderDetail(bake = allBakes[0]){  
+function renderDetail(bake = bakes[0]){  
   const detailContainer = document.querySelector('#detail')
   detailContainer.innerHTML = `
     <img src=${bake.image_url} alt="Alice’s Orange & Cardamom ‘Ice Cream’ Buns">
