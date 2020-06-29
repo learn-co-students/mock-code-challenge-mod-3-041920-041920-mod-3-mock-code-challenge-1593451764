@@ -81,7 +81,7 @@ function renderBakeListItem(bake) {
 function renderBakeDetails(bake) {
     const bakeDetailsContainer = document.querySelector("#detail")
     bakeDetailsContainer.innerHTML = `
-        <img src="${bake.image_url}" alt="Alice’s Orange & Cardamom ‘Ice Cream’ Buns">
+        <img src="${bake.image_url}" alt=${bake.name}">
         <h1>${bake.name}</h1>
         <p class="description"> ${bake.description} </p>
         <form id="score-form" data-id="${bake.id}">
