@@ -1,4 +1,4 @@
-
+let allBakes = []
 const baseUrl = 'http://localhost:3000/bakes'
 
 fetchAllBakes(baseUrl)
@@ -10,7 +10,16 @@ judgeBakeEvent()
 function fetchAllBakes(url){
   fetch(url)
   .then(response => response.json())
-  .then(renderBakes)
+  .then(bakes => {
+    allBakes = bakes
+    console.log(allBakes)
+    renderBakes(allBakes)
+  })
+}
+
+function updateAllBakes(newBake){
+  allBakes[newBake.id] = newBake
+  console.log(allBakes)
 }
 
 function createBakeFetch(newBake){
@@ -55,6 +64,8 @@ function patchScoreFetch(score, bakeId){
       console.log(bakeObj)
       
       bake = bakeObj
+      updateAllBakes(bakeObj)
+
       console.log("initial bake")
       console.log(bake)
     })
@@ -70,7 +81,7 @@ function winnerFetch(){
 
 /* initial render */
 function renderBakes(bakes){
-  // console.log(bakes)
+  console.log(bakes)
   bakes.forEach(renderOneBake);
   renderDetail(bakes[0])
 }
