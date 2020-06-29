@@ -11,14 +11,16 @@ function fetchAllBakes(url){
   fetch(url)
   .then(response => response.json())
   .then(bakes => {
-    allBakes = bakes
+    allBakes = [...bakes]
     console.log(allBakes)
     renderBakes(allBakes)
   })
 }
 
 function updateAllBakes(newBake){
+  debugger
   allBakes[newBake.id] = newBake
+  console.log('updated')
   console.log(allBakes)
 }
 
@@ -83,7 +85,7 @@ function winnerFetch(){
 function renderBakes(bakes){
   console.log(bakes)
   bakes.forEach(renderOneBake);
-  renderDetail(bakes[0])
+  // renderDetail(bakes[0])
 }
 
 function renderOneBake(bake){  
