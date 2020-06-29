@@ -6,39 +6,50 @@ const bakesContainer = document.querySelector("#bakes-container");
 const singleBake = document.querySelector("#detail");
 const newBakeForm = document.querySelector("#new-bake-form");
 
+
+//Render Helpers 
+
+function renderOneListing(listingObject) {
+    // const bakeOne = document.createElement("li")
+    // bakeOne.classList.add("item")
+    bakeOne.dataset.id = listingObject.id
+    bakeOne.innerHTML = `<li class="item" data-id="${listingObject.id}">${listingObject.name}"</li>`
+    bakesContainer.appendChild(bakeOne)
+}
+
+    //Deliverable 2
+
+    bakeOne.addEventListener("click", function(event) {
+        event.preventDefault();
+        renderBakeDetail(bake) 
+    });
+
+function renderBakeDetail(bake) {
+    singleBake.innerHTML = `
+    <img src="${bake.image_url}" alt="${bake.name}">
+    <h1>${bake.name}</h1>
+    <p class="description">${bake.description}</p>
+    <form id="score-form" data-id="${bake.id}">
+    <input value="10" type="number" name="score" min="0" max="10" step="1">
+    <input type="submit" value="Rate">
+    </form>`
+}
+
+function renderAllListings(listings) {
+    listings.forEach(function (bake) {
+        renderOneListing(bake)
+    })
+};
+
 //Deliverable 1: all the bakes 
 fetch('http://localhost:3000/bakes')
 .then(response => response.json())
 .then(bakeData => {
-    bakeData.forEach(function(bake) {
-    bakesContainer.innerHTML += 
-    `<li class="item" data-id=${bake.id}>${bake.name}</li>`
-    })
-});
-
-//Deliverable 2: show a clicked bake on the main page 
-bakesContainer.addEventListener("click", function(event) {
-    const outerCard = event.target.closest(".item")
-    const listingId = outerCard.dataset.id
-
-    fetch('http://localhost:3000/${listingId}')
-    .then(response => response.json())
-    .then(bake => {
-            singleBake.innerHTML = `<img src="${bake.image_url}" alt="${bake.name}">
-            <h1>${bake.name}</h1>
-            <p class="description">
-            ${bake.description}
-            </p>
-            <form id="score-form" data-id=${bake.id}>
-                <input value="10" type="number" name="score" min="0" max="10" step="1">
-                <input type="submit" value="Rate">
-            </form>`
-        })
+    renderAllListings(bakeData)
     })
 
-    
 
-    //Deliverable 3: create a new bake
+ //Deliverable 3: create a new bake
     newBakeForm.addEventListener("submit", function(event) {
         event.preventDefault()
 
