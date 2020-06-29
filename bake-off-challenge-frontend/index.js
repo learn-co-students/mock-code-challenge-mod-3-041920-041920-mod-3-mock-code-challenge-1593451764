@@ -14,15 +14,7 @@ function renderBakes(bakes) {
         console.log(bake)
         let bakeLi = document.createElement('li')
         bakeLi.addEventListener("click", (event) => {
-            function changeDetails(bake) {
-                console.log(bake)
-                let detailDiv = document.querySelector('#detail')
-                detailDiv.innerHTML = `
-                <h1>${bake.name}</h1>
-                <img src ="${bake.image_url}" />
-                <p>'${bake.description}' </p>
-                `
-            }
+            
             changeDetails(bake)
         }
           )
@@ -34,9 +26,24 @@ function renderBakes(bakes) {
 
 document.addEventListener('DOMContentLoaded', (event) => {
     fetchBakes()
+    food
 });
 
 
-
+function changeDetails(obj) {
+    console.log(obj)
+    let detailDiv = document.querySelector('#detail')
+    detailDiv.innerHTML = `
+    <h1>${obj.name}</h1>
+    <img src ="${obj.image_url}" />
+    <p>'${obj.description}' </p>
+    `
+}
 // 2. **When a bake is clicked in the sidebar**, the details for the bake 
 // should show up in the detail area.
+
+let food = fetch('http://127.0.0.1:3000/bakes')
+.then(response => response.json())
+.then(data => changeDetails(data[0]));
+
+console.log(food)
