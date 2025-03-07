@@ -13,7 +13,7 @@ $ rails s                   # Start the server
 ```
 
 A full list of available routes can be found by visiting `http://localhost:3000/rails/info/routes`.
-  
+
 ## Demo
 
 Here's a demo of the completed app:
@@ -22,9 +22,9 @@ Here's a demo of the completed app:
 
 ## Deliverables
 
-1. **When the page first loads**, all the bakes should display in the sidebar. The first bake should show in the detail view (see deliverable 2).
-2. **When a bake is clicked in the sidebar**, the details for the bake should show up in the detail area.
-3. When the "Make New Bake" button is clicked, a popup (modal) will display a form (this part is already done for you). **When this form is submitted**, a new bake should be created in the backend and added to the list of bakes displayed in the sidebar.
+- [x] 1. **When the page first loads**, all the bakes should display in the sidebar. The first bake should show in the detail view (see deliverable 2).
+- [x] 2. **When a bake is clicked in the sidebar**, the details for the bake should show up in the detail area.
+- [x] When the "Make New Bake" button is clicked, a popup (modal) will display a form (this part is already done for you). **When this form is submitted**, a new bake should be created in the backend and added to the list of bakes displayed in the sidebar.
 
 ## Bonus Deliverables
 - **In the detail view, when a user enters a score and submits**, the score should be saved in the backend and persisted in the frontend.
